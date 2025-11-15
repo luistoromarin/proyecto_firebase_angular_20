@@ -5,7 +5,10 @@ import {
   signInWithPopup,
   signOut,
   user,
-  User
+  User,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile
 } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario';
@@ -81,5 +84,83 @@ export class AuthService {
   obtenerUidUsuario(): string | null {
     const usuario = this.obtenerUsuarioActual();
     return usuario ? usuario.uid : null;
+  }
+
+  // ========================================================================================
+  // MÉTODOS DE AUTENTICACIÓN CON EMAIL Y PASSWORD
+  // ========================================================================================
+
+  /**
+   * Registra un nuevo usuario con email y password
+   * @param email - Email del usuario
+   * @param password - Password del usuario
+   * @param nombre - Nombre del usuario (opcional)
+   * @returns Usuario creado o null
+   */
+  async registrarConEmail(email: string, password: string, nombre?: string): Promise<Usuario | null> {
+    try {
+      // Crear usuario con email y password
+      const resultado = await createUserWithEmailAndPassword(this.auth, email, password);
+      const usuarioFirebase = resultado.user;
+
+      // Actualizar el perfil con el nombre si se proporcionó
+      if (usuarioFirebase && nombre) {
+        await updateProfile(usuarioFirebase, {
+          displayName: nombre
+        });
+      }
+
+      if (usuarioFirebase) {
+        const usuario: Usuario = {
+          uid: usuarioFirebase.uid,
+          email: usuarioFirebase.email || email,
+          nombre: nombre || usuarioFirebase.displayName || 'Usuario',
+          fotoUrl: usuarioFirebase.photoURL || undefined,
+          fechaCreacion: new Date(),
+          ultimaConexion: new Date()
+        };
+
+        return usuario;
+      }
+
+      return null;
+
+    } catch (error) {
+      console.error('❌ Error durante el registro:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Inicia sesión con email y password
+   * @param email - Email del usuario
+   * @param password - Password del usuario
+   * @returns Usuario autenticado o null
+   */
+  async iniciarSesionConEmail(email: string, password: string): Promise<Usuario | null> {
+    try {
+      // Iniciar sesión con email y password
+      const resultado = await signInWithEmailAndPassword(this.auth, email, password);
+      const usuarioFirebase = resultado.user;
+
+      if (usuarioFirebase) {
+        const usuario: Usuario = {
+          uid: usuarioFirebase.uid,
+          email: usuarioFirebase.email || email,
+          nombre: usuarioFirebase.displayName || 'Usuario',
+          fotoUrl: usuarioFirebase.photoURL || undefined,
+          fechaCreacion: new Date(), // Se sobrescribe si existe en Firestore
+          ultimaConexion: new Date()
+        };
+
+        return usuario;
+      }
+
+      return null;
+
+    } catch (error) {
+      console.error('❌ Error durante el login:', error);
+      throw error;
+    }
   }
 }
