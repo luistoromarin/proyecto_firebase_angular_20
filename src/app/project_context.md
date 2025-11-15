@@ -458,6 +458,299 @@ Esta refactorización establece una base sólida para el crecimiento del proyect
 
 ---
 
+## Sistema de Diseño y Paleta de Colores
+
+### Actualización: Enero 2025
+
+Se ha implementado un sistema de diseño coherente y una nueva paleta de colores en toda la aplicación, estableciendo un lenguaje visual consistente para todos los componentes presentes y futuros.
+
+### 🎨 Paleta de Colores Principal
+
+#### Colores Primarios
+```css
+/* Colores de acción e interacción */
+--coral-primary: #F96C4C;      /* Botones principales, CTAs, elementos activos */
+--naranja-hover: #FC9B53;      /* Estados hover, transiciones */
+--mostaza-accent: #F8C341;     /* Acentos, gradientes intermedios */
+--amarillo-highlight: #FFF1A2; /* Estados focus, highlights, gradientes suaves */
+--menta-success: #B8ECB0;      /* Mensajes de éxito, estados positivos */
+```
+
+#### Colores Base
+```css
+/* Colores fundamentales */
+--blanco: #ffffff;      /* Fondos de tarjetas, contenedores principales */
+--negro: #050505;       /* Texto principal, bordes, contornos */
+--gris-neutral: #cfcfcf; /* Elementos secundarios, separadores, placeholders */
+```
+
+### 🎯 Aplicación de Colores por Contexto
+
+#### Botones y Elementos Interactivos
+```css
+/* Botón principal */
+.btn-primary {
+  background: #F96C4C;
+  color: #ffffff;
+  border: 0.35em solid #050505;
+}
+
+.btn-primary:hover {
+  background: #FC9B53;
+  transform: translateY(-0.2em);
+}
+
+.btn-primary:active {
+  transform: translateY(0.1em);
+}
+
+/* Botón secundario */
+.btn-secondary {
+  background: #ffffff;
+  color: #050505;
+  border: 0.35em solid #050505;
+}
+
+.btn-secondary:hover {
+  background: #FFF1A2;
+}
+```
+
+#### Estados de Formularios
+```css
+/* Campo normal */
+.form-input {
+  background: #ffffff;
+  border: 0.35em solid #050505;
+  color: #050505;
+}
+
+/* Campo con focus */
+.form-input:focus {
+  background: #FFF1A2;
+  transform: translateY(-0.1em);
+}
+
+/* Campo con error */
+.form-input.error {
+  border-color: #F96C4C;
+  background: #fff1f1;
+}
+```
+
+#### Mensajes y Notificaciones
+```css
+/* Mensaje de error */
+.message-error {
+  background: #ffffff;
+  border: 0.35em solid #F96C4C;
+  color: #F96C4C;
+}
+
+/* Mensaje de éxito */
+.message-success {
+  background: #ffffff;
+  border: 0.35em solid #B8ECB0;
+  color: #050505;
+}
+```
+
+### 🔧 Estilos Base Unificados
+
+#### Bordes y Sombras
+```css
+/* Estilo de tarjeta estándar */
+.card {
+  border: 0.35em solid #050505;
+  border-radius: 0.6em;
+  box-shadow: 0.3em 0.3em 0 #000000;
+  background: #ffffff;
+}
+
+/* Efecto hover para tarjetas */
+.card:hover {
+  transform: translateY(-0.1em);
+  box-shadow: 0.4em 0.4em 0 #000000;
+}
+```
+
+#### Tipografía
+```css
+/* Tipografía base */
+.text-base {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #050505;
+}
+
+/* Tamaños de tipografía */
+.text-h1 { font-size: 1.2em; }    /* Títulos principales */
+.text-h2 { font-size: 0.95em; }   /* Subtítulos */
+.text-p { font-size: 0.9em; }     /* Texto de párrafo */
+.text-label { font-size: 0.6em; } /* Labels y texto pequeño */
+```
+
+### ✨ Efectos y Animaciones
+
+#### Efectos de Interacción
+```css
+/* Lift Effect - Para elementos importantes */
+.effect-lift:hover {
+  transform: translateY(-0.2em);
+  box-shadow: 0.5em 0.5em 0 #000000;
+}
+
+/* Press Effect - Para botones y elementos clickeables */
+.effect-press:active {
+  transform: translateY(0.1em);
+  box-shadow: 0.1em 0.1em 0 #000000;
+}
+
+/* Shimmer Effect - Para elementos destacados */
+@keyframes shimmer {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+.effect-shimmer {
+  animation: shimmer 2s infinite;
+}
+```
+
+#### Gradientes Animados
+```css
+/* Gradiente de fondo principal */
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #B8ECB0 0%, #FFF1A2 50%, #F8C341 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+```
+
+### 🏗️ Patrones Decorativos
+
+#### Patterns de Fondo
+```css
+/* Patrón de puntos */
+.pattern-dots::before {
+  background-image: radial-gradient(circle, #050505 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.1;
+}
+
+/* Patrón diagonal */
+.pattern-diagonal::before {
+  background-image: linear-gradient(45deg, #050505 25%, transparent 25%), 
+                    linear-gradient(-45deg, #050505 25%, transparent 25%);
+  background-size: 20px 20px;
+  opacity: 0.05;
+}
+```
+
+### 📱 Consideraciones Mobile-First
+
+#### Elementos Touch-Friendly
+```css
+/* Tamaños mínimos para elementos interactivos */
+.interactive-element {
+  min-height: 44px; /* Estándar de accesibilidad táctil */
+  min-width: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Optimizaciones para iOS */
+.form-element {
+  -webkit-appearance: none; /* Remover estilos nativos */
+  -webkit-overflow-scrolling: touch; /* Scroll suave */
+}
+```
+
+#### Viewport Dinámico
+```css
+/* Altura de viewport para móviles */
+.full-height {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height */
+}
+```
+
+### 🎪 Componentes de Ejemplo
+
+#### Botón Estándar
+```html
+<button class="btn-primary effect-lift effect-press">
+  <span>Texto del Botón</span>
+</button>
+```
+
+#### Tarjeta de Contenido
+```html
+<div class="card effect-lift">
+  <h2 class="text-h2">Título</h2>
+  <p class="text-p">Contenido de la tarjeta</p>
+</div>
+```
+
+#### Campo de Formulario
+```html
+<div class="form-group">
+  <label class="text-label">Etiqueta</label>
+  <input class="form-input" type="text" placeholder="Placeholder">
+</div>
+```
+
+### 🔄 Estados de Carga
+```css
+/* Spinner personalizado */
+.spinner-custom {
+  border: 0.3em solid #cfcfcf;
+  border-top: 0.3em solid #F96C4C;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animación de lift para contenedores de carga */
+.loading-container {
+  animation: lift 2s ease-in-out infinite;
+}
+
+@keyframes lift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.2em); box-shadow: 0.5em 0.5em 0 #000000; }
+}
+```
+
+### 📋 Guía de Implementación
+
+#### Para Nuevos Componentes:
+1. **Usar la paleta de colores definida** - No crear nuevos colores
+2. **Aplicar estilos base** - Bordes, sombras y tipografía consistentes
+3. **Implementar efectos hover/active** - Lift y press effects
+4. **Mantener mobile-first** - Elementos touch-friendly
+5. **Usar clases utilitarias** - Reutilizar patrones existentes
+
+#### Estructura Recomendada para CSS:
+```css
+/* 1. Estilos base del componente */
+/* 2. Estados (hover, active, focus, disabled) */
+/* 3. Variantes (size, color) */
+/* 4. Media queries (mobile-first) */
+/* 5. Animaciones específicas */
+```
+
+Esta guía de diseño asegura consistencia visual y experiencia de usuario cohesiva en toda la aplicación.
+
+---
+
 ## Servicio Auth - Expansión de Métodos de Autenticación
 
 ### Actualización: Enero 2025
