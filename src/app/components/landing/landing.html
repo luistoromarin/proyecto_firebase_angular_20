@@ -1,0 +1,148 @@
+<!-- Landing Page SkillMain -->
+<div class="landing-container">
+  
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-content">
+      <div class="logo-section">
+        <h1 class="logo-text">SkillMain</h1>
+        <span class="logo-accent">🚀</span>
+      </div>
+      <button (click)="navegarAAuth()" class="nav-cta btn-primary effect-lift effect-press">
+        Comenzar
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-video-container">
+      <video autoplay muted loop playsinline class="hero-video">
+        <source src="https://res.cloudinary.com/duxugbbed/video/upload/v1762786098/hero1_ovnuri.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+    
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title effect-shimmer">
+          Potencia tu Carrera Profesional
+        </h1>
+        <p class="hero-subtitle">
+          Haz de tu crecimiento tu mejor estrategia profesional
+        </p>
+        <div class="hero-cta">
+          <button (click)="navegarAAuth()" class="btn-hero-primary effect-lift effect-press">
+            <span>Comenzar Gratis</span>
+            <span class="btn-icon">✨</span>
+          </button>
+          <button (click)="scrollToSection('features')" class="btn-hero-secondary effect-lift effect-press">
+            <span>Descubre Más</span>
+            <span class="btn-icon">⬇️</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">¿Por qué SkillMain?</h2>
+        <p class="section-subtitle">
+          Herramientas diseñadas para impulsar tu crecimiento profesional
+        </p>
+      </div>
+      
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+          <div class="feature-card card effect-lift">
+            <div class="feature-icon">{{ feature.icon }}</div>
+            <h3 class="feature-title text-h2">{{ feature.title }}</h3>
+            <p class="feature-description text-p">{{ feature.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="steps-section bg-gradient-primary pattern-dots">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Cómo Funciona</h2>
+        <p class="section-subtitle">
+          Tu camino hacia el éxito profesional en 3 simples pasos
+        </p>
+      </div>
+      
+      <div class="steps-container">
+        @for (step of steps; track step.number) {
+          <div class="step-item">
+            <div class="step-number-container">
+              <span class="step-number">{{ step.number }}</span>
+            </div>
+            <div class="step-content card effect-lift">
+              <h3 class="step-title text-h2">{{ step.title }}</h3>
+              <p class="step-description text-p">{{ step.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content card effect-lift">
+        <h2 class="cta-title text-h1">Empieza tu Transformación Hoy</h2>
+        <p class="cta-description text-p">
+          Únete a miles de profesionales que ya están creciendo con SkillMain.
+        </p>
+        <div class="cta-actions">
+          <button (click)="navegarAAuth()" class="btn-cta-primary effect-lift effect-press">
+            <span>Comenzar Gratis</span>
+            <span class="btn-icon">🚀</span>
+          </button>
+        </div>
+        <div class="cta-benefits">
+          <div class="benefit-item">
+            <span class="benefit-icon">✅</span>
+            <span class="benefit-text text-label">Acceso inmediato</span>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-icon">✅</span>
+            <span class="benefit-text text-label">Sin compromiso</span>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-icon">✅</span>
+            <span class="benefit-text text-label">Cancela cuando quieras</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3 class="footer-logo">SkillMain</h3>
+          <p class="footer-tagline text-p">
+            Tu crecimiento, tu mejor estrategia
+          </p>
+        </div>
+        <div class="footer-info">
+          <p class="footer-text text-label">
+            © 2025 SkillMain. Construido con Angular 20 + Firebase
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+</div>

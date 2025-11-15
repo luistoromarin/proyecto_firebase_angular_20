@@ -4,8 +4,13 @@ import { AuthGuard } from './guards/auth-guard';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/auth',
-        pathMatch: 'full'
+        loadComponent: () => import('./components/landing/landing').then(m => m.Landing),
+        title: "SkillMain - Potencia tu Carrera Profesional"
+    },
+    {
+        path: 'landing',
+        loadComponent: () => import('./components/landing/landing').then(m => m.Landing),
+        title: "SkillMain - Potencia tu Carrera Profesional"
     },
     {
         path: 'auth',
