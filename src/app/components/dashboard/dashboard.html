@@ -1,0 +1,47 @@
+<div class="dashboard-container">
+  @if (usuario) {
+    <header class="dashboard-header">
+      <div class="header-content">
+        <h1>Dashboard</h1>
+      <div class="user-info">
+        @if (usuario.fotoUrl) {
+          <img [src]="usuario.fotoUrl" [alt]="usuario.nombre || 'Usuario'" class="user-avatar">
+        } @else {
+          <div class="user-avatar-placeholder">
+            {{ (usuario.nombre || 'U').charAt(0).toUpperCase() }}
+          </div>
+        }
+        <span class="user-name">{{ usuario.nombre || 'Usuario' }}</span>
+        <button (click)="cerrarSesion()" class="logout-btn">Cerrar Sesión</button>
+      </div>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <div class="welcome-section">
+        <h2>Bienvenido, {{ usuario.nombre || 'Usuario' }}! 👋</h2>
+        <p class="welcome-message">
+          Has iniciado sesión exitosamente en tu panel de control.
+        </p>
+        
+        <div class="user-details">
+          <div class="detail-card">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value">{{ usuario.email }}</span>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">UID:</span>
+            <span class="detail-value">{{ usuario.uid }}</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  } @else {
+    <div class="loading-container">
+      <div class="loading-message">
+        <div class="spinner"></div>
+        <p>Cargando...</p>
+      </div>
+    </div>
+  }
+</div>

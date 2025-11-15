@@ -458,6 +458,232 @@ Esta refactorización establece una base sólida para el crecimiento del proyect
 
 ---
 
+## Servicio Auth - Expansión de Métodos de Autenticación
+
+### Actualización: Enero 2025
+
+El servicio `AuthService` ha sido expandido para incluir autenticación con email y password, además del método existente de Google OAuth, proporcionando múltiples opciones de autenticación para los usuarios.
+
+### Nuevas Características de Autenticación
+
+#### 1. Registro con Email y Password
+```typescript
+async registrarConEmail(email: string, password: string, nombre?: string): Promise<Usuario | null>
+```
+
+**Características:**
+- Crea nuevos usuarios con email y contraseña
+- Actualiza automáticamente el perfil con el nombre proporcionado
+- Maneja errores de Firebase Authentication de forma consistente
+- Retorna un objeto `Usuario` normalizado
+
+**Ejemplo de uso:**
+```typescript
+try {
+  const nuevoUsuario = await authService.registrarConEmail(
+    'usuario@email.com',
+    'password123',
+    'Juan Pérez'
+  );
+  
+  if (nuevoUsuario) {
+    console.log('Usuario registrado:', nuevoUsuario.nombre);
+    // Redireccionar al dashboard o chat
+  }
+} catch (error) {
+  // Manejar errores específicos de Firebase
+  this.manejarErrorAutenticacion(error);
+}
+```
+
+#### 2. Inicio de Sesión con Email y Password
+```typescript
+async iniciarSesionConEmail(email: string, password: string): Promise<Usuario | null>
+```
+
+**Características:**
+- Autentica usuarios existentes con credenciales email/password
+- Normaliza la respuesta al mismo formato que Google Auth
+- Actualiza automáticamente la fecha de última conexión
+- Manejo de errores unificado
+
+**Ejemplo de uso:**
+```typescript
+try {
+  const usuario = await authService.iniciarSesionConEmail(
+    'usuario@email.com',
+    'password123'
+  );
+  
+  if (usuario) {
+    console.log('Sesión iniciada para:', usuario.nombre);
+    this.router.navigate(['/chat']);
+  }
+} catch (error) {
+  this.mostrarErrorLogin(error);
+}
+```
+
+### Normalización de Objetos Usuario
+
+Todos los métodos de autenticación retornan el mismo formato de objeto `Usuario`:
+
+```typescript
+interface Usuario {
+  uid: string;
+  email: string;
+  nombre: string;
+  fotoUrl?: string;
+  fechaCreacion: Date;
+  ultimaConexion: Date;
+}
+```
+
+**Consistencia entre métodos:**
+- **Google Auth**: Obtiene datos del perfil de Google
+- **Email Auth**: Usa datos proporcionados por el usuario
+- **Fallbacks**: Nombres por defecto cuando no se proporcionan datos
+
+### Manejo de Errores Unificado
+
+Los errores de Firebase se propagan de manera consistente para ambos métodos:
+
+```typescript
+// Errores comunes de Email/Password Auth
+'auth/email-already-in-use'     // Email ya registrado
+'auth/weak-password'            // Contraseña débil
+'auth/user-not-found'           // Usuario no existe
+'auth/wrong-password'           // Contraseña incorrecta
+'auth/invalid-email'            // Email inválido
+'auth/too-many-requests'        // Demasiados intentos
+```
+
+### Integración con Componentes
+
+#### Actualización del Componente Auth
+```typescript
+export class AuthComponent {
+  // Estados reactivos para ambos métodos
+  autenticandoGoogle = signal(false);
+  autenticandoEmail = signal(false);
+  registrando = signal(false);
+  
+  // Formulario para email/password
+  formularioLogin = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+  
+  async iniciarSesionGoogle() {
+    this.autenticandoGoogle.set(true);
+    try {
+      const usuario = await this.authService.iniciarSesionConGoogle();
+      if (usuario) this.router.navigate(['/chat']);
+    } catch (error) {
+      this.manejarError(error);
+    } finally {
+      this.autenticandoGoogle.set(false);
+    }
+  }
+  
+  async iniciarSesionEmail() {
+    if (this.formularioLogin.valid) {
+      this.autenticandoEmail.set(true);
+      try {
+        const { email, password } = this.formularioLogin.value;
+        const usuario = await this.authService.iniciarSesionConEmail(email!, password!);
+        if (usuario) this.router.navigate(['/chat']);
+      } catch (error) {
+        this.manejarError(error);
+      } finally {
+        this.autenticandoEmail.set(false);
+      }
+    }
+  }
+}
+```
+
+### Template con Control Flow Syntax
+```html
+<!-- Opciones de autenticación -->
+<div class="auth-options">
+  <!-- Google Authentication -->
+  <button 
+    (click)="iniciarSesionGoogle()" 
+    [disabled]="autenticandoGoogle() || autenticandoEmail()"
+    class="btn-google">
+    @if (autenticandoGoogle()) {
+      <span class="spinner"></span>
+    } @else {
+      <span class="google-icon"></span>
+    }
+    Continuar con Google
+  </button>
+  
+  <!-- Separator -->
+  <div class="separator">
+    <span>o</span>
+  </div>
+  
+  <!-- Email/Password Form -->
+  <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSesionEmail()">
+    <input 
+      type="email" 
+      formControlName="email"
+      placeholder="Email"
+      [class.error]="formularioLogin.get('email')?.invalid && formularioLogin.get('email')?.touched">
+    
+    <input 
+      type="password" 
+      formControlName="password"
+      placeholder="Contraseña"
+      [class.error]="formularioLogin.get('password')?.invalid && formularioLogin.get('password')?.touched">
+    
+    <button 
+      type="submit" 
+      [disabled]="formularioLogin.invalid || autenticandoEmail()"
+      class="btn-email">
+      @if (autenticandoEmail()) {
+        <span class="spinner"></span>
+        <span>Iniciando...</span>
+      } @else {
+        <span>Iniciar Sesión</span>
+      }
+    </button>
+  </form>
+  
+  <!-- Validation Messages -->
+  @if (formularioLogin.get('email')?.invalid && formularioLogin.get('email')?.touched) {
+    <div class="error-message">
+      @if (formularioLogin.get('email')?.errors?.['required']) {
+        <span>El email es requerido</span>
+      } @else if (formularioLogin.get('email')?.errors?.['email']) {
+        <span>Formato de email inválido</span>
+      }
+    </div>
+  }
+</div>
+```
+
+### Beneficios de la Expansión
+
+1. **Flexibilidad**: Los usuarios pueden elegir su método preferido de autenticación
+2. **Accesibilidad**: No todos los usuarios quieren usar cuentas de Google
+3. **Control**: Mayor control sobre el proceso de registro y datos del usuario
+4. **Consistencia**: API unificada independientemente del método de auth
+5. **Escalabilidad**: Base para agregar otros proveedores (Facebook, Twitter, etc.)
+
+### Consideraciones de Seguridad
+
+- **Validación del lado cliente**: Validaciones básicas en el formulario
+- **Validación del servidor**: Firebase maneja las validaciones de seguridad
+- **Políticas de contraseña**: Firebase enforza políticas mínimas de password
+- **Rate limiting**: Firebase previene ataques de fuerza bruta automáticamente
+
+Esta expansión mantiene la simplicidad del servicio original mientras proporciona opciones adicionales de autenticación, manteniendo la consistencia en la experiencia del usuario y la API del desenvolvedor.
+
+---
+
 ## TODO: Mejoras Pendientes
 
 1. **Implementar Signals**: Migrar a nuevo sistema reactivo

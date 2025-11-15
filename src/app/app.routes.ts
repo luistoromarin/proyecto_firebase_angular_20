@@ -13,6 +13,12 @@ export const routes: Routes = [
         title: "Iniciar sesión - Chat Asistente"
     },
     {
+        path: 'dashboard',
+        loadComponent: () => import('./components/dashboard/dashboard').then(m => m.Dashboard),
+        title: "Dashboard - Chat Asistente",
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'chat',
         loadComponent: () => import('./components/chat/chat').then(m => m.Chat),
         title: "Chat - Asistente",
