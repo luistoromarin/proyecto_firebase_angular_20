@@ -2,53 +2,49 @@
   <div class="auth-card">
     <!-- Encabezado -->
     <div class="auth-header">
-      <div class="logo">💬</div>
-      <h1 class="title">Chat Asistente</h1>
+      <!--div class="logo">💬</div-->
+      <h1 class="title">SkillMain</h1>
       <p class="subtitle">
         @if (modoRegistro()) {
-          Crea tu cuenta nueva
+        Crea tu cuenta nueva
         } @else {
-          Bienvenido de vuelta
+        Bienvenido de vuelta
         }
       </p>
     </div>
 
     <!-- Contenido principal -->
     <div class="auth-content">
-      
+
       <!-- Toggle entre Login y Registro -->
       <div class="mode-toggle">
-        <button 
-          [class.active]="!modoRegistro()"
-          (click)="modoRegistro.set(false)"
-          class="toggle-btn">
+        <button [class.active]="!modoRegistro()" (click)="modoRegistro.set(false)" class="toggle-btn">
           Iniciar Sesión
         </button>
-        <button 
-          [class.active]="modoRegistro()"
-          (click)="modoRegistro.set(true)"
-          class="toggle-btn">
+        <button [class.active]="modoRegistro()" (click)="modoRegistro.set(true)" class="toggle-btn">
           Registrarse
         </button>
       </div>
 
       <!-- Botón de Google (siempre visible) -->
-      <button 
-        class="google-btn"
-        (click)="iniciarSesionConGoogle()"
+      <button class="google-btn" (click)="iniciarSesionConGoogle()"
         [disabled]="autenticandoGoogle() || autenticandoEmail() || registrando()">
-        
+
         @if (autenticandoGoogle()) {
-          <span class="spinner"></span>
+        <span class="spinner"></span>
         } @else {
-          <span class="google-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-          </span>
+        <span class="google-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+        </span>
         }
         <span>{{ autenticandoGoogle() ? 'Conectando...' : 'Continuar con Google' }}</span>
       </button>
@@ -60,258 +56,225 @@
 
       <!-- Formulario de Login -->
       @if (!modoRegistro()) {
-        <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSesionConEmail()" class="auth-form">
-          
-          <div class="form-group">
-            <label for="loginEmail">Email</label>
-            <input 
-              id="loginEmail"
-              type="email" 
-              formControlName="email"
-              placeholder="tu@email.com"
-              [class.error]="formularioLogin.get('email')?.invalid && formularioLogin.get('email')?.touched"
-              autocomplete="email">
-            
-            @if (formularioLogin.get('email')?.invalid && formularioLogin.get('email')?.touched) {
-              <div class="field-error">
-                @if (formularioLogin.get('email')?.errors?.['required']) {
-                  El email es requerido
-                } @else if (formularioLogin.get('email')?.errors?.['email']) {
-                  Formato de email inválido
-                }
-              </div>
+      <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSesionConEmail()" class="auth-form">
+
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" formControlName="email" placeholder="tu@email.com"
+            [class.error]="formularioLogin.get('email')?.invalid && formularioLogin.get('email')?.touched"
+            autocomplete="email">
+
+          @if (formularioLogin.get('email')?.invalid && formularioLogin.get('email')?.touched) {
+          <div class="field-error">
+            @if (formularioLogin.get('email')?.errors?.['required']) {
+            El email es requerido
+            } @else if (formularioLogin.get('email')?.errors?.['email']) {
+            Formato de email inválido
             }
           </div>
+          }
+        </div>
 
-          <div class="form-group">
-            <label for="loginPassword">Contraseña</label>
-            <input 
-              id="loginPassword"
-              type="password" 
-              formControlName="password"
-              placeholder="Tu contraseña"
-              [class.error]="formularioLogin.get('password')?.invalid && formularioLogin.get('password')?.touched"
-              autocomplete="current-password">
-            
-            @if (formularioLogin.get('password')?.invalid && formularioLogin.get('password')?.touched) {
-              <div class="field-error">
-                @if (formularioLogin.get('password')?.errors?.['required']) {
-                  La contraseña es requerida
-                } @else if (formularioLogin.get('password')?.errors?.['minlength']) {
-                  La contraseña debe tener al menos 6 caracteres
-                }
-              </div>
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input id="loginPassword" type="password" formControlName="password" placeholder="Tu contraseña"
+            [class.error]="formularioLogin.get('password')?.invalid && formularioLogin.get('password')?.touched"
+            autocomplete="current-password">
+
+          @if (formularioLogin.get('password')?.invalid && formularioLogin.get('password')?.touched) {
+          <div class="field-error">
+            @if (formularioLogin.get('password')?.errors?.['required']) {
+            La contraseña es requerida
+            } @else if (formularioLogin.get('password')?.errors?.['minlength']) {
+            La contraseña debe tener al menos 6 caracteres
             }
           </div>
+          }
+        </div>
 
-          <button 
-            type="submit" 
-            class="submit-btn"
-            [disabled]="formularioLogin.invalid || autenticandoEmail()">
-            
-            @if (autenticandoEmail()) {
-              <span class="spinner"></span>
-              <span>Iniciando...</span>
-            } @else {
-              <span>Iniciar Sesión</span>
-            }
-          </button>
+        <button type="submit" class="submit-btn" [disabled]="formularioLogin.invalid || autenticandoEmail()">
 
-        </form>
+          @if (autenticandoEmail()) {
+          <span class="spinner"></span>
+          <span>Iniciando...</span>
+          } @else {
+          <span>Iniciar Sesión</span>
+          }
+        </button>
+
+      </form>
       }
 
       <!-- Formulario de Registro -->
       @if (modoRegistro()) {
-        <form [formGroup]="formularioRegistro" (ngSubmit)="registrarUsuario()" class="auth-form">
-          
-          <!-- Campos Obligatorios -->
-          <div class="form-section">
-            <h3>Información básica <span class="required">*</span></h3>
-            
-            <div class="form-group">
-              <label for="regNombre">Nombre completo *</label>
-              <input 
-                id="regNombre"
-                type="text" 
-                formControlName="nombre"
-                placeholder="Tu nombre completo"
-                [class.error]="formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched"
-                autocomplete="name">
-              
-              @if (formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched) {
-                <div class="field-error">
-                  @if (formularioRegistro.get('nombre')?.errors?.['required']) {
-                    El nombre es requerido
-                  } @else if (formularioRegistro.get('nombre')?.errors?.['minlength']) {
-                    El nombre debe tener al menos 2 caracteres
-                  }
-                </div>
+      <form [formGroup]="formularioRegistro" (ngSubmit)="registrarUsuario()" class="auth-form">
+
+        <!-- Campos Obligatorios -->
+        <div class="form-section">
+          <h3>Información básica <span class="required">*</span></h3>
+
+          <div class="form-group">
+            <label for="regNombre">Nombre completo *</label>
+            <input id="regNombre" type="text" formControlName="nombre" placeholder="Tu nombre completo"
+              [class.error]="formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched"
+              autocomplete="name">
+
+            @if (formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched) {
+            <div class="field-error">
+              @if (formularioRegistro.get('nombre')?.errors?.['required']) {
+              El nombre es requerido
+              } @else if (formularioRegistro.get('nombre')?.errors?.['minlength']) {
+              El nombre debe tener al menos 2 caracteres
               }
             </div>
-
-            <div class="form-group">
-              <label for="regEmail">Email *</label>
-              <input 
-                id="regEmail"
-                type="email" 
-                formControlName="email"
-                placeholder="tu@email.com"
-                [class.error]="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
-                autocomplete="email">
-              
-              @if (formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched) {
-                <div class="field-error">
-                  @if (formularioRegistro.get('email')?.errors?.['required']) {
-                    El email es requerido
-                  } @else if (formularioRegistro.get('email')?.errors?.['email']) {
-                    Formato de email inválido
-                  }
-                </div>
-              }
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="regPassword">Contraseña *</label>
-                <input 
-                  id="regPassword"
-                  type="password" 
-                  formControlName="password"
-                  placeholder="Mínimo 6 caracteres"
-                  [class.error]="formularioRegistro.get('password')?.invalid && formularioRegistro.get('password')?.touched"
-                  autocomplete="new-password">
-                
-                @if (formularioRegistro.get('password')?.invalid && formularioRegistro.get('password')?.touched) {
-                  <div class="field-error">
-                    @if (formularioRegistro.get('password')?.errors?.['required']) {
-                      La contraseña es requerida
-                    } @else if (formularioRegistro.get('password')?.errors?.['minlength']) {
-                      Mínimo 6 caracteres
-                    }
-                  </div>
-                }
-              </div>
-
-              <div class="form-group">
-                <label for="regConfirmPassword">Confirmar contraseña *</label>
-                <input 
-                  id="regConfirmPassword"
-                  type="password" 
-                  formControlName="confirmarPassword"
-                  placeholder="Repite tu contraseña"
-                  [class.error]="(formularioRegistro.get('confirmarPassword')?.invalid && formularioRegistro.get('confirmarPassword')?.touched) || formularioRegistro.errors?.['passwordsNoCoinciden']"
-                  autocomplete="new-password">
-                
-                @if (formularioRegistro.get('confirmarPassword')?.invalid && formularioRegistro.get('confirmarPassword')?.touched) {
-                  <div class="field-error">
-                    La confirmación es requerida
-                  </div>
-                }
-                @if (formularioRegistro.errors?.['passwordsNoCoinciden'] && formularioRegistro.get('confirmarPassword')?.touched) {
-                  <div class="field-error">
-                    Las contraseñas no coinciden
-                  </div>
-                }
-              </div>
-            </div>
+            }
           </div>
 
-          <!-- Campos Opcionales -->
-          <div class="form-section">
-            <h3>Información adicional <span class="optional">(opcional)</span></h3>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label for="regGenero">Género</label>
-                <select id="regGenero" formControlName="genero">
-                  <option value="">Selecciona una opción</option>
-                  <option value="masculino">Masculino</option>
-                  <option value="femenino">Femenino</option>
-                  <option value="otro">Otro</option>
-                  <option value="prefiero-no-decir">Prefiero no decir</option>
-                </select>
-              </div>
+          <div class="form-group">
+            <label for="regEmail">Email *</label>
+            <input id="regEmail" type="email" formControlName="email" placeholder="tu@email.com"
+              [class.error]="formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched"
+              autocomplete="email">
 
-              <div class="form-group">
-                <label for="regEdad">Edad</label>
-                <input 
-                  id="regEdad"
-                  type="number" 
-                  formControlName="edad"
-                  placeholder="Tu edad"
-                  min="13" 
-                  max="120"
-                  [class.error]="formularioRegistro.get('edad')?.invalid && formularioRegistro.get('edad')?.touched">
-                
-                @if (formularioRegistro.get('edad')?.invalid && formularioRegistro.get('edad')?.touched) {
-                  <div class="field-error">
-                    @if (formularioRegistro.get('edad')?.errors?.['min']) {
-                      La edad mínima es 13 años
-                    } @else if (formularioRegistro.get('edad')?.errors?.['max']) {
-                      La edad máxima es 120 años
-                    }
-                  </div>
+            @if (formularioRegistro.get('email')?.invalid && formularioRegistro.get('email')?.touched) {
+            <div class="field-error">
+              @if (formularioRegistro.get('email')?.errors?.['required']) {
+              El email es requerido
+              } @else if (formularioRegistro.get('email')?.errors?.['email']) {
+              Formato de email inválido
+              }
+            </div>
+            }
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regPassword">Contraseña *</label>
+              <input id="regPassword" type="password" formControlName="password" placeholder="Mínimo 6 caracteres"
+                [class.error]="formularioRegistro.get('password')?.invalid && formularioRegistro.get('password')?.touched"
+                autocomplete="new-password">
+
+              @if (formularioRegistro.get('password')?.invalid && formularioRegistro.get('password')?.touched) {
+              <div class="field-error">
+                @if (formularioRegistro.get('password')?.errors?.['required']) {
+                La contraseña es requerida
+                } @else if (formularioRegistro.get('password')?.errors?.['minlength']) {
+                Mínimo 6 caracteres
                 }
               </div>
+              }
             </div>
 
             <div class="form-group">
-              <label for="regSituacion">Situación laboral</label>
-              <select id="regSituacion" formControlName="situacionLaboral">
+              <label for="regConfirmPassword">Confirmar contraseña *</label>
+              <input id="regConfirmPassword" type="password" formControlName="confirmarPassword"
+                placeholder="Repite tu contraseña"
+                [class.error]="(formularioRegistro.get('confirmarPassword')?.invalid && formularioRegistro.get('confirmarPassword')?.touched) || formularioRegistro.errors?.['passwordsNoCoinciden']"
+                autocomplete="new-password">
+
+              @if (formularioRegistro.get('confirmarPassword')?.invalid &&
+              formularioRegistro.get('confirmarPassword')?.touched) {
+              <div class="field-error">
+                La confirmación es requerida
+              </div>
+              }
+              @if (formularioRegistro.errors?.['passwordsNoCoinciden'] &&
+              formularioRegistro.get('confirmarPassword')?.touched) {
+              <div class="field-error">
+                Las contraseñas no coinciden
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Campos Opcionales -->
+        <div class="form-section">
+          <h3>Información adicional <span class="optional">(opcional)</span></h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regGenero">Género</label>
+              <select id="regGenero" formControlName="genero">
                 <option value="">Selecciona una opción</option>
-                <option value="empleado">Empleado</option>
-                <option value="desempleado">Desempleado</option>
-                <option value="estudiante">Estudiante</option>
-                <option value="jubilado">Jubilado</option>
-                <option value="autonomo">Autónomo</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
                 <option value="otro">Otro</option>
+                <option value="prefiero-no-decir">Prefiero no decir</option>
               </select>
             </div>
+
+            <div class="form-group">
+              <label for="regEdad">Edad</label>
+              <input id="regEdad" type="number" formControlName="edad" placeholder="Tu edad" min="13" max="120"
+                [class.error]="formularioRegistro.get('edad')?.invalid && formularioRegistro.get('edad')?.touched">
+
+              @if (formularioRegistro.get('edad')?.invalid && formularioRegistro.get('edad')?.touched) {
+              <div class="field-error">
+                @if (formularioRegistro.get('edad')?.errors?.['min']) {
+                La edad mínima es 13 años
+                } @else if (formularioRegistro.get('edad')?.errors?.['max']) {
+                La edad máxima es 120 años
+                }
+              </div>
+              }
+            </div>
           </div>
 
-          <button 
-            type="submit" 
-            class="submit-btn"
-            [disabled]="formularioRegistro.invalid || registrando()">
-            
-            @if (registrando()) {
-              <span class="spinner"></span>
-              <span>Registrando...</span>
-            } @else {
-              <span>Crear cuenta</span>
-            }
-          </button>
+          <div class="form-group">
+            <label for="regSituacion">Situación laboral</label>
+            <select id="regSituacion" formControlName="situacionLaboral">
+              <option value="">Selecciona una opción</option>
+              <option value="empleado">Empleado</option>
+              <option value="desempleado">Desempleado</option>
+              <option value="estudiante">Estudiante</option>
+              <option value="jubilado">Jubilado</option>
+              <option value="autonomo">Autónomo</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
 
-        </form>
+        <button type="submit" class="submit-btn" [disabled]="formularioRegistro.invalid || registrando()">
+
+          @if (registrando()) {
+          <span class="spinner"></span>
+          <span>Registrando...</span>
+          } @else {
+          <span>Crear cuenta</span>
+          }
+        </button>
+
+      </form>
       }
 
       <!-- Mensajes -->
       @if (mensajeError()) {
-        <div class="error-message">
-          ❌ {{ mensajeError() }}
-        </div>
+      <div class="error-message">
+        ❌ {{ mensajeError() }}
+      </div>
       }
 
       @if (mensajeExito()) {
-        <div class="success-message">
-          ✅ {{ mensajeExito() }}
-        </div>
+      <div class="success-message">
+        ✅ {{ mensajeExito() }}
+      </div>
       }
 
       <!-- Link para cambiar modo -->
       <div class="mode-switch">
         @if (modoRegistro()) {
-          <p>¿Ya tienes cuenta? 
-            <button type="button" class="link-btn" (click)="cambiarModo()">
-              Inicia sesión aquí
-            </button>
-          </p>
+        <p>¿Ya tienes cuenta?
+          <button type="button" class="link-btn" (click)="cambiarModo()">
+            Inicia sesión aquí
+          </button>
+        </p>
         } @else {
-          <p>¿No tienes cuenta? 
-            <button type="button" class="link-btn" (click)="cambiarModo()">
-              Regístrate aquí
-            </button>
-          </p>
+        <p>¿No tienes cuenta?
+          <button type="button" class="link-btn" (click)="cambiarModo()">
+            Regístrate aquí
+          </button>
+        </p>
         }
       </div>
 
