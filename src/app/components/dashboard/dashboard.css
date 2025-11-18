@@ -16,10 +16,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(45deg, #050505 25%, transparent 25%),
-    linear-gradient(-45deg, #050505 25%, transparent 25()),
-    linear-gradient(45deg, transparent 75%, #050505 75%),
-    linear-gradient(-45deg, transparent 75%, #050505 75%);
+  background-image: linear-gradient(45deg, #050505 25%, transparent 25%), 
+                    linear-gradient(-45deg, #050505 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #050505 75%), 
+                    linear-gradient(-45deg, transparent 75%, #050505 75%);
   background-size: 20px 20px;
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   opacity: 0.05;
@@ -250,16 +250,8 @@
 }
 
 @keyframes lift {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-0.2em);
-    box-shadow: 0.5em 0.5em 0 #000000;
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.2em); box-shadow: 0.5em 0.5em 0 #000000; }
 }
 
 .loading-message .spinner {
@@ -293,45 +285,45 @@
   .dashboard-main {
     padding: 2rem 1.5rem;
   }
-
+  
   .welcome-section {
     padding: 2rem;
     border-radius: 10px;
   }
-
+  
   .welcome-section h2 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
   }
-
+  
   .welcome-message {
     font-size: 1rem;
     margin-bottom: 2rem;
   }
-
+  
   .detail-card {
     padding: 1.25rem;
   }
-
+  
   .detail-label {
     font-size: 0.8rem;
   }
-
+  
   .detail-value {
     font-size: 0.95rem;
   }
-
+  
   .loading-message {
     padding: 2.5rem 2rem;
     border-radius: 10px;
     max-width: 350px;
   }
-
+  
   .loading-message .spinner {
     width: 36px;
     height: 36px;
   }
-
+  
   .loading-message p {
     font-size: 1rem;
   }
@@ -345,63 +337,63 @@
     text-align: left;
     padding: 0 1.5rem;
   }
-
+  
   .dashboard-header h1 {
     font-size: 1.7rem;
   }
-
+  
   .user-info {
     flex-direction: row;
     gap: 1rem;
   }
-
+  
   .user-avatar,
   .user-avatar-placeholder {
     width: 40px;
     height: 40px;
   }
-
+  
   .user-name {
     font-size: 1rem;
   }
-
+  
   .logout-btn {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
-
+  
   .dashboard-main {
     padding: 2.5rem 2rem;
   }
-
+  
   .welcome-section {
     padding: 2.5rem;
     border-radius: 12px;
   }
-
+  
   .welcome-section h2 {
     font-size: 2rem;
   }
-
+  
   .welcome-message {
     font-size: 1.05rem;
   }
-
+  
   .user-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.25rem;
   }
-
+  
   .detail-card {
     padding: 1.5rem;
     border-radius: 8px;
   }
-
+  
   .detail-label {
     font-size: 0.85rem;
   }
-
+  
   .detail-value {
     font-size: 1rem;
   }
@@ -411,49 +403,49 @@
   .header-content {
     padding: 0 2rem;
   }
-
+  
   .dashboard-header h1 {
     font-size: 1.8rem;
   }
-
+  
   .dashboard-main {
     max-width: 1200px;
     padding: 3rem 2rem;
   }
-
+  
   .welcome-section {
     padding: 3rem;
   }
-
+  
   .welcome-section h2 {
     font-size: 2.2rem;
   }
-
+  
   .welcome-message {
     font-size: 1.1rem;
   }
-
+  
   .user-details {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
   }
-
+  
   .logout-btn:hover {
     transform: translateY(-1px);
   }
-
+  
   .loading-message {
     padding: 3rem;
     border-radius: 12px;
   }
-
+  
   .loading-message .spinner {
     width: 40px;
     height: 40px;
     border-width: 4px;
   }
-
+  
   .loading-message p {
     font-size: 1.1rem;
   }
