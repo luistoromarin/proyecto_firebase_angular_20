@@ -383,7 +383,7 @@ export class FirestoreService {
   }
 
   // ========================================================================================
-  // MÉTODOS ESPECÍFICOS ORIGINALES (COMPATIBILIDAD HACIA ATRÁS)
+  // MÉTODOS ESPECÍFICOS ORIGINALES (COMPATIBILIDAD HACIA ATRÁS) /
   // ========================================================================================
 
 
